@@ -1,8 +1,15 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.btn-escond{
+  display: none;
 }
 
-a {
-  color: #00B7FF;
+.card{
+  min-width: 200px;
+  min-height: 200px;
+  max-height: 300px;
 }
+
+
+.dtr-details{  width: 100% !important;
+
+}
+  

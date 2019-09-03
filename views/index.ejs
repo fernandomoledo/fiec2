@@ -1,11 +1,59 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>TÍTULO</title>
+  <!-- Bootstrap core CSS -->
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+              <div class="jumbotron jumbotron-fluid">
+                  <div class="container">
+                    <h1 class="display-4">TÍTULO</h1>
+                    <p class="lead">Criando um CRUD completo com Mysql, Express, Node.js e Bootstrap</p>
+                  </div>
+              </div>
+          </div>
+        </div>
+          <div div class="col-lg-12">
+               
+                <div class="alert alert-danger" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+               
+          </div>
+          <div div class="col-lg-12">           
+              <form method="post" action="/users/login">
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="email">E-mail</label>
+                      <input type="email" class="form-control" id="email" name="email" placeholder="Informe seu e-mail" required>                    
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="senha">Senha</label>
+                      <input type="password" class="form-control" id="senha" name="senha" placeholder="Senha" required>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-primary">Entrar</button>
+                </form>
+          </div>
+    </div>
+      <!-- Bootstrap core JavaScript -->
+  <script src="/vendor/jquery/jquery.min.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
+  
+
+
+

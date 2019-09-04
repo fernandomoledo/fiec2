@@ -1,0 +1,176 @@
+===============
+Sobre o Node.js
+===============
+
+Node.js é um interpretador, com código aberto, de código JavaScript de modo assíncrono e orientado a eventos, focado em migrar a programação do Javascript do lado do cliente para os servidores, criando assim aplicações de alta escalabilidade, capazes de manipular milhares de conexões/requisições simultâneas em tempo real, numa única máquina física. O Node.js é baseado no interpretador V8 JavaScript Engine (interpretador de JavaScript open source implementado pelo Google em C++ e utilizado pelo Chrome).
+
+Para obter o Node.js, acesse:
+https://nodejs.org/en/
+
+Recomendado usar a versão LTS (other downloads).
+
+Se for usar o executável, o mesmo configura as variáveis de ambiente automaticamente.
+Senão, se usar a versão portable, descompacte e coloque no drive C:\; após tem que setar o PATH do Nodejs manualmente nas configurações avançadas do Windows;
+
+Se for micro com usuário sem administrador, setar a variável em linha de comando:
+
+set Path=C:\node;
+echo %Path%
+
+Utilizando o NPM
+O NPM é o gerenciador de pacotes para o Node.js. Com ele é possível instalar diversos módulos disponíveis para a linguagem. Seu repositório é extremamente extenso e possui módulos como gerenciadores de e-mail, acesso a bases de dados, controladores de sessão, manipulação de arquivos, etc.
+
+Vamos utilizar o NPM para instalar o nosso framework de desenvolvimento de aplicações MVC para Node.js, o Express.js. Com ele temos facilidades em criar, desenvolver e renderizar aplicações.
+O primeiro passo é instalar o express. Para isso, digite no prompt de comando:
+
+npm install -g express
+
+Se tudo correr bem, você deve ver que o express foi instalado.
+Agora precisamos instalar o express-generator. Digite no prompt de comando:
+
+npm install -g express-generator
+
+Se tudo correr bem, você deve ver que o express generator foi instalado.
+
+Como já foi dito, o Express.js é um framework de desenvolvimento para Node.js que permite construir aplicações muito mais rapidamente, além de oferecer funcionalidades práticas para o desenvolvimento de suas aplicações. Além disso, o Express fornece diversas ferramentas de renderização de páginas, como oEJS, Marko, Pug, Jade, Hogan.js, EJS, Nunjucks e jshtml.
+Para criar nossa aplicação, no “Prompt de Comando” do Windows, acessa a pasta de aplicações que criamos (C:\nodejs\apps) e digite o comando:
+
+express –-view=ejs nome_do_projeto
+
+Onde nome_do_projeto é o nome do nosso projeto, logo você pode colocar o nome que quiser.
+
+Veja que o Express sugere o comando: 
+
+cd nome_do_projeto && npm install.
+
+Com o cd mvc você acessa a pasta do nosso projeto. Aquele && é uma sintaxe do “Prompt de Comando” do Windows que “junta” dois ou mais comandos, logo o que ele vai fazer é acessar o diretório da nossa aplicação e executar o próximo comando (repare que funciona semelhante ao arquivo em lotes (.bat)).
+O comando npm install, quando executado em uma pasta de projetos que contem o arquivo “package.json”, faz a leitura desse arquivo e busca no repositório online por pacotes e faz a instalação automaticamente.
+
+Pronto! temos nossa primeira aplicação em Node.js com Express rodando. Para “subir” o servidor, basta digitar:
+
+node bin/www
+ou
+npm start
+
+Para fazer autodeploy das mudanças realizadas no código, podemos usar o nodemon:
+
+npm install -g -s nodemon
+
+Para subir a aplicação:
+
+nodemon server
+
+No projeto Express devemos saber que:
+
+1 - A pasta public é para armazenamento de arquivos estáticos. Possui internamente os diretórios stylesheets, javascripts e images. Para acessar os arquivos destes diretórios, é só utilizar / antes. Ex: /javascripts/script.js
+
+2 - A pasta routes possui as rotas da aplicação. Rotas recebem requisições da aplicação através dos métodos GET, POST, PUT e DELETE. Elas podem apenas devolver informações ou receber, processar e devolver informações.
+
+REQ - request - dados que vem "do usuário"
+RES - response - resposta da aplicação para o usuário
+
+3 - A pasta views armazena as páginas HTML da aplicação. Como estamos utilizando o Template Engine EJS (Embedded JavaScript), a extensão das páginas é .ejs
+
+As views são chamadas nas rotas pelos seus nomes, sem a extensão. Exemplo: Se eu quiser chamar a view "lista.ejs", na rota chamamos res.render('lista');
+
+App.js -> arquivo na raiz do projeto que possui as instâncias de módulos globais e rotas da aplicação. Veremos em mais detalhes na próxima aula.
+
+A porta padrão do Node.js / Express é 3000. Poderá ser alterada por outra porta acima de 1024 no arquivo bin/www.
+
+
+===========================
+USANDO O GITHUB
+===========================
+
+Github é um repositório de código de software, baseado em git.
+
+É útil para quando precisamos trabalhar em projetos de "muitas mãos", como o TCC.
+
+Ajuda a manter o código atualizado, guardado sem risco de perdas e de fácil acompanhamento de modificações.
+
+Para usar o GITHUB, acesse https://github.com e cadastre-se.
+
+Crie seu repositório.
+
+Baixe o GIT para sua máquina https://git-scm.com/downloads
+
+Abra o "git-cmd" - se baixou a versão "portable" ou clique direito do mouse "git bash" se instalou o .exe, acesse o diretório do node: cd c:\node\apps e "clone" seu projeto criado no repositório.
+
+git clone https://github.com/SEUREPOSITORIO/fiec.git
+
+
+Para clonar o meu repositório, digite no git-cmd:
+
+git clone https://github.com/fernandomoledo/fiec2.git
+
+Se ocorrer o erro "fatal: unable to access 'https://github.com/fernandomoledo/fiec2.git/': SSL certificate problem: self signed certificate in certificate chain", rode o comando:
+
+git config --global http.sslVerify false
+
+Mova os arquivos clonados do meu repositório para a pasta clonada de vocês.
+
+Alterando o conteúdo, rodem no git-cmd:
+
+git status
+
+Se houverem alterações, aparecerão linhas em vermelho.
+
+git add .
+
+git commit -m "Comentário para informar o que você mudou no projeto"
+
+git push origin master
+
+Será solicitado seu e-mail e senha do cadastro no github.
+
+Atenção:
+Pode ocorrer erro de falta de e-mail cadastrado.
+Rode o comando:
+
+git config --global user.email seuemaildogit@seuemail.com
+
+Para ao invés de clonar, apenas verificar diferenças entre o repositório e seu projeto local, use:
+
+git pull origin master
+
+
+================================
+Banco de Dados do sistema Agenda
+================================
+
+Primeiramente, crie no MySQL um banco de dados chamado "agenda_fiec", com charset "utf8mb4", "utf8mb4_general_ci"
+
+Crie as tabelas usuarios e tarefas:
+
+CREATE TABLE usuarios (
+id int(11) NOT NULL AUTO_INCREMENT,
+nome varchar(255) NOT NULL,
+email varchar(255) NOT NULL unique,
+senha varchar(255) NOT NULL,
+tipo char(1) DEFAULT '',
+ativo char(1) DEFAULT 'S',
+foto varchar(255) DEFAULT NULL,
+cpf char(11) NOT NULL unique,
+PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE tarefas (
+id int(11) NOT NULL AUTO_INCREMENT,
+titulo varchar(255) NOT NULL,
+descricao text,
+data datetime DEFAULT NULL,
+id_usuario int(11) NOT NULL,
+PRIMARY KEY (id),
+KEY fk_tarefas_usuarios (id_usuario),
+CONSTRAINT fk_tarefas_usuarios FOREIGN KEY (id_usuario) REFERENCES usuarios (id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+Insira um usuário inicial para testes
+insert into usuarios(nome,email,senha,tipo,cpf) values('Usuario teste','algum_email@valido.com',md5('fiec'),'A','12345678909');
+
+Caso ao rodar o comando para iniciar o node (npm start) e ocorrer um erro de Permissão no MySQL verifique se seu usuário e senha "batem" com o cadastrado em "dao/db.js". Caso esteja tudo "OK" execute a query abaixo no MySQL:
+
+ALTER USER 'root'@'localhost'
+IDENTIFIED WITH mysql_native_password BY '1234'
+
+Onde '1234' deve ser substituído pela sua senha, caso não seja 1234.

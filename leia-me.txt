@@ -174,3 +174,19 @@ ALTER USER 'root'@'localhost'
 IDENTIFIED WITH mysql_native_password BY '1234'
 
 Onde '1234' deve ser substituído pela sua senha, caso não seja 1234.
+
+
+==================
+MODELO MVC
+==================
+
+
+Trabalharemos com o Node.js + Express com a arquitetura MVC, ou seja, nossas aplicações serão divididas em camadas independentes, cada uma com sua função:
+
+MODEL - (pastas model e dao) - Ficam armazenados os modelos de dados. Em Java, por exemplo, se quisermos criar objetos do tipo "cliente" criamos uma classe modelo "Cliente". No Node.js os modelos servem necessariamente para validação de dados. Veremos isso adiante. Já na pasta "dao" ficam as classes responsáveis por manipular dados do banco. O ideal é criar uma classe para cada entidade do banco. Ex. se temos as tabelas "clientes" e "compras" devemos criar as classes ClientesDAO e ComprasDAO (arquivo clientes-dao.js e compras-dao.js);
+
+VIEW - (pasta views) - é responsável por receber e exibir dados do usuário. São as páginas HTML, que no nosso caso, possuem extensão .ejs pois são geradas pelo template engine EJS.
+
+CONTROLLER - (pasta controller) - Faz a ponte entre os modelos / daos e as views. A grosso modo recebem os dados dos formulários e/ou requisições do sistema, acionam as classes DAO quando necessário, processam os dados e devolvem as informações para a view novamente. 
+
+Assim, com esse modelo, as rotas (pasta routes) ficam apenas encarregadas da sua função principal que é de rotear requisições do protocolo HTTP (GET - obter dados, POST - enviar dados para salvamento, PUT - enviar dados para edição e DELETE - enviar dados para exclusão) e acionar o controller que fará o processamento do pedido.

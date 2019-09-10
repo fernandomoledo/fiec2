@@ -1,0 +1,37 @@
+<% include template/cabecalho %>
+      
+    <div class="col-lg-12 text-center">
+            <h1 class="mt-5">Minhas tarefas</h1>
+    </div>
+    <div class="col-lg-12">
+            <% include template/mensagens %>
+    </div>
+    <div class="row justify-content-center" style="margin-top: 20px;">
+        <!-- lista de cards de tarefas -->
+        <% for(tarefa of tarefas){ %>
+        <div class="card bg-light mb-3" style="max-width: 18rem; margin-right: 2%">
+            <div class="card-header">
+               Tarefa #<%= tarefa.id %>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">
+                  <%= tarefa.titulo %>
+              </h5>
+              <p class="card-text">
+                  <%= tarefa.descricao %>
+              </p>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">
+                    <%= tarefa.data_formatada %>
+                </small>
+            </div>
+          </div>
+        <% } %>
+    </div>
+<% include template/meio %>
+
+<script>
+	//aqui vão alguns scripts dos cards
+</script>
+<% include template/rodape %>

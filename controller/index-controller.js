@@ -1,3 +1,6 @@
+const TaskDAO = require('../dao/task-dao');
+const taskDAO = new TaskDAO();
+
 class IndexController{
     /*
     Método index() da classe IndexController
@@ -12,6 +15,27 @@ class IndexController{
                 res.redirect('/home');
             }else{
                 res.render('index', { titulo: 'Agenda de tarefas'});
+            }
+        }
+    }
+    //método controlador da rota GET /home
+    home(){
+        return function(req,res){
+            const sessao = req.session;
+            if(sessao.nome){//verifico se usuário está logado
+               taskDAO.listar(sessao.userId)
+               .then(tarefas => {
+                   res.render(
+                       'home',
+                       {
+                        tarefas : tarefas, 
+                        sessao : sessao
+                       }
+                   );//fecha res.render
+                }).catch(erro => console.log(erro));
+    
+            }else{
+                res.redirect("/");
             }
         }
     }

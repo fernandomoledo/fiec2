@@ -1,0 +1,84 @@
+<% include ../template/cabecalho %>
+      
+    <div class="col-lg-12 text-center">
+       <h1 class="mt-5">Listar minhas tarefas</h1>
+    </div>
+    <div class="col-lg-12">
+        <% include ../template/mensagens %>
+    </div>
+    <div class="row justify-content-center"><a class="btn btn-success" href="/tasks/add">+ Nova tarefa</a></div>
+    <div class="col-lg-12" style="margin-top: 20px;">
+    <table class="display compact" style="width:100%">  
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Título</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Data</th>
+            <th scope="col">Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for(tarefa of tarefas){ %>    
+            <tr>
+              <th scope="row">
+                <%= tarefa.id %>
+              </th>
+              <td>
+                <%= tarefa.titulo %>
+              </td>
+              <td><%= tarefa.descricao %></td>
+              <td><%= tarefa.data_formatada %></td>
+              <td>
+                <a href="#"><img src="/images/editar.png" style="width: 25px;height: 25px; margin-right: 1%" alt="Ícone para editar o cadastro da tarefa" title="Editar o cadastro da tarefa <%= tarefa.titulo %>" /></a>
+                <a href="#"><img src="/images/excluir.png" style="width: 25px;height: 25px;" alt="Ícone para excluir o cadastro da tarefa" title="Excluir o cadastro da tarefa <%= tarefa.titulo %>" /></a>
+              </td>
+            </tr>
+              <% } %>               
+          </tbody>
+      </table>
+
+                </div>
+<% include ../template/meio %>
+<script>
+  //SCRIPT DE EXCLUSÃO DA TAREFA
+</script>
+<script>
+
+  //https://datatables.net/
+
+  $(document).ready(function(){
+    $('table').DataTable({
+      rowReorder: {
+          enable :false,
+            selector: 'td:nth-child(2)'
+        },
+        responsive: true,
+      //"order": [[ 1, "asc" ]], //default: 1a coluna asc
+      "language" : {
+            "sEmptyTable": "Nenhum registro encontrado",
+            "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+            "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sInfoThousands": ".",
+            "sLengthMenu": "_MENU_ resultados por página",
+            "sLoadingRecords": "Carregando...",
+            "sProcessing": "Processando...",
+            "sZeroRecords": "Nenhum registro encontrado",
+            "sSearch": "Pesquisar",
+            "oPaginate": {
+                "sNext": "Próximo",
+                "sPrevious": "Anterior",
+                "sFirst": "Primeiro",
+                "sLast": "Último"
+            },
+            "oAria": {
+                "sSortAscending": ": Ordenar colunas de forma ascendente",
+                "sSortDescending": ": Ordenar colunas de forma descendente"
+            }
+        }
+    });
+  });
+</script>
+<% include ../template/rodape %>

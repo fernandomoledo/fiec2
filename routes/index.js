@@ -10,5 +10,7 @@ var router = express.Router();
 
 //chamados o método index() do controller index-controller.js
 router.get('/', indexController.index());
+//programar a resposta para a rota /home
+router.get('/home',indexController.home());
 
 module.exports = router;

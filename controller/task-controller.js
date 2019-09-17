@@ -23,6 +23,63 @@ class TaskController{
             }
         }
     }
+
+    formAdicionar(){
+        return function(req,res){
+            let sessao = req.session;
+            if(sessao.nome){
+                res.render('tarefas/form',{sessao: sessao, tarefa: {} });
+            }else{
+                res.redirect("/");//login
+            }
+        }
+    }//fim do método formAdicionar
+
+    adicionar(){
+        return function(req,res){
+            let sessao = req.session;
+            let tarefa = {
+                titulo : req.body.titulo,
+                descricao: req.body.descricao,
+                data: req.body.data == '' ? null : req.body.data.replace('T',' '),
+                id_usuario : sessao.userId
+            };
+
+            if(sessao.nome){
+                taskDAO.adicionar(tarefa)
+                .then( () => {
+                    req.flash('success',`Tarefa ${tarefa.titulo} cadastrada com sucesso`);
+                    res.redirect("/tasks");
+                }).catch( (erro) => {
+                    req.flash('error','Erro ao cadastrar a tarefa. ' + erro);
+                    res.render("tarefas/form",{sessao: sessao, tarefa: tarefa});
+                })
+            }else{
+                res.redirect("/");
+            }
+        }
+    }//fecha o método adicionar
+
+    formEditar(){
+        return function(req,res){
+            let sessao = req.session;
+            //pega o parâmetro id da tarefa da URL do navegador
+            let id = req.params.id;
+
+            if(sessao.nome){
+                taskDAO.buscarPorId(sessao.userId, id)
+                .then( tarefa => {
+                    res.render('tarefas/form',{sessao: sessao, tarefa: tarefa });
+                }).catch( erro => {
+                    req.flash('error','Erro ao buscar a tarefa.' + erro);
+                    res.redirect('/tasks');
+                });
+                
+            }else{
+                res.redirect("/");//login
+            }
+        }
+    }//fim do método formEditar
 }
 
 module.exports = TaskController;

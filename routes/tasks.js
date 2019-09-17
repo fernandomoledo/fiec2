@@ -7,5 +7,8 @@ var router = express.Router();
 
 
 router.get('/', taskController.listar());
+router.get('/add',taskController.formAdicionar());
+router.post('/add',taskController.adicionar());
+router.get('/edit/:id',taskController.formEditar());
 
 module.exports = router;

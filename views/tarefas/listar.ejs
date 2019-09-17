@@ -30,7 +30,7 @@
               <td><%= tarefa.descricao %></td>
               <td><%= tarefa.data_formatada %></td>
               <td>
-                <a href="#"><img src="/images/editar.png" style="width: 25px;height: 25px; margin-right: 1%" alt="Ícone para editar o cadastro da tarefa" title="Editar o cadastro da tarefa <%= tarefa.titulo %>" /></a>
+                <a href="/tasks/edit/<%= tarefa.id %>"><img src="/images/editar.png" style="width: 25px;height: 25px; margin-right: 1%" alt="Ícone para editar o cadastro da tarefa" title="Editar o cadastro da tarefa <%= tarefa.titulo %>" /></a>
                 <a href="#"><img src="/images/excluir.png" style="width: 25px;height: 25px;" alt="Ícone para excluir o cadastro da tarefa" title="Excluir o cadastro da tarefa <%= tarefa.titulo %>" /></a>
               </td>
             </tr>

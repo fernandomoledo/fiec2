@@ -28,7 +28,7 @@
 		<div class="form-group col-md-3">
 			<label for="data">Data/hora</label>
 			<input type="datetime-local" class="form-control" id="data" name="data" placeholder="dd/mm/aaaa hh:mm" 
-			value="<%= (tarefa.data === undefined || tarefa.data == null) ? tarefa.data : tarefa.data.replace(' ','T') %>">
+			value="<%= tarefa.data %>">
 		</div>
     </div>
     <button type="submit" class="btn btn-primary">Salvar</button>

@@ -69,6 +69,10 @@ class TaskController{
             if(sessao.nome){
                 taskDAO.buscarPorId(sessao.userId, id)
                 .then( tarefa => {
+                    /*
+                    Ao invés de delegar ao form o teste da data, o ideal é deixarmos que o controller faça isso
+                    */
+                    tarefa.data == null ? tarefa.data = '' : tarefa.data = tarefa.data.replace(' ','T');
                     res.render('tarefas/form',{sessao: sessao, tarefa: tarefa });
                 }).catch( erro => {
                     req.flash('error','Erro ao buscar a tarefa.' + erro);

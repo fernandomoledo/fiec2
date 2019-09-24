@@ -24,7 +24,7 @@ var logger = require('morgan');
 */
 var flash = require('express-flash');
 var session = require('express-session');
-
+var methodOverride = require('method-override');
 /*
   O express já importou automaticamente nossos 2 primeiros arquivos de rotas
 */
@@ -52,6 +52,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//troca POST por PUT ou DELETE
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+  var method = req.body._method
+  delete req.body._method
+  return method
+  }
+}));
 /*
   O Express já configurou a aplicação para que quando a rota / seja chamada, ele requeira o arquivo /routes/index.js
   Se for a rota /users, o express chama o arquivo /routes/users.js

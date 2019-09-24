@@ -84,6 +84,37 @@ class TaskController{
             }
         }
     }//fim do método formEditar
+
+    editar(){
+        return function(req,res){
+            let sessao = req.session;
+            //receber o id da tarefa que vamos editar
+            const id = req.params.id;
+            //montar o objeto json "tarefa"
+            let tarefa = {
+                titulo : req.body.titulo,
+                descricao : req.body.descricao,
+
+                data : req.body.data == '' ? null : req.body.data.replace('T',' '),
+
+                id_usuario : sessao.userId,
+                id : id
+            };
+            //só usuários autenticados podem editar
+            if(sessao.nome){
+                taskDAO.editar(tarefa)
+                .then(() => {
+                    req.flash('success',`Tarefa "${tarefa.titulo}" editada com sucesso`);
+                    res.redirect('/tasks');
+                }).catch( (erro) => {
+                    req.flash('error',`Erro ao editar a tarefa: ${erro}`);
+                    res.render('tarefas/form', {sessao : sessao, tarefa : tarefa})
+                })
+            }else{
+                res.redirect('/');
+            }
+        }
+    }//fim do método editar
 }
 
 module.exports = TaskController;

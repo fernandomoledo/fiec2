@@ -46,6 +46,30 @@ class TaskDAO{
             )
         });
     }
+
+    editar(tarefa){
+        return new Promise((resolve,reject) => {
+            this.db.query(
+                //1º parâmetro - query sql
+                'UPDATE tarefas SET titulo = ?, descricao = ?, data = ? WHERE id_usuario = ? and id = ?',
+                //2º parâmetro - parâmetros da query
+                [
+                    tarefa.titulo,
+                    tarefa.descricao,
+                    tarefa.data,
+                    tarefa.id_usuario,
+                    tarefa.id
+                ],
+                //3º parâmetro - Callback function
+                (erro) => {
+                    if(erro)
+                        return reject('Erro ao editar a tarefa. ' + erro);
+                    else
+                        return resolve();
+                }
+            )
+        });
+    }
 }
 
 module.exports = TaskDAO;

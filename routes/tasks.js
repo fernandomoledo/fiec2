@@ -11,6 +11,9 @@ router.get('/add',taskController.formAdicionar());
 router.post('/add',taskController.adicionar());
 router.get('/edit/:id',taskController.formEditar());
 router.put('/edit/:id',taskController.editar());
+router.delete('/delete/:id',
+    taskController.excluir()
+);
 /*
 router.route('/edit/:id)
     .get(taskController.formEditar())

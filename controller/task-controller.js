@@ -115,6 +115,24 @@ class TaskController{
             }
         }
     }//fim do método editar
+
+    excluir(){
+        return function(req,res){
+            let sessao = req.session;
+            const id = req.params.id;
+            if(sessao.nome){
+                taskDAO.excluir(sessao.userId,id)
+                .then(
+                    req.flash('success','Tarefa excluída com sucesso')
+                ).catch( (erro) => 
+                    req.flash('error','Erro ao excluir a tarefa: ' + erro)
+                )
+                res.status(200).send("ok");
+            }else{
+                res.redirect("/");
+            }
+        }
+    }//fim do método excluir
 }
 
 module.exports = TaskController;

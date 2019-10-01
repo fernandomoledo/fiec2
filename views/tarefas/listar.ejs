@@ -31,7 +31,10 @@
               <td><%= tarefa.data_formatada %></td>
               <td>
                 <a href="/tasks/edit/<%= tarefa.id %>"><img src="/images/editar.png" style="width: 25px;height: 25px; margin-right: 1%" alt="Ícone para editar o cadastro da tarefa" title="Editar o cadastro da tarefa <%= tarefa.titulo %>" /></a>
-                <a href="#"><img src="/images/excluir.png" style="width: 25px;height: 25px;" alt="Ícone para excluir o cadastro da tarefa" title="Excluir o cadastro da tarefa <%= tarefa.titulo %>" /></a>
+                <a href="#"><img src="/images/excluir.png" style="width: 25px;height: 25px;" alt="Ícone para excluir o cadastro da tarefa" title="Excluir o cadastro da tarefa <%= tarefa.titulo %>" 
+                data-tarefaid="<%= tarefa.id %>"  
+                class="btn-excluir"   
+                 /></a>
               </td>
             </tr>
               <% } %>               
@@ -41,7 +44,22 @@
                 </div>
 <% include ../template/meio %>
 <script>
-  //SCRIPT DE EXCLUSÃO DA TAREFA
+  //programamos o click na classe excluir dos links das imagens de exclusão para capturar o dataset desses links
+$('.btn-excluir').click(function(){
+  //confirmação da exclusão
+  let resp = confirm('Tem certeza?');
+  //se o usuário tem certeza, realizamos a exclusão
+  if(resp){
+    let registro = $(this);
+    console.log(registro);
+    let id = registro[0].dataset.tarefaid;
+    //fetch - componente do javascript que serve para realizar requisições assíncronas
+    fetch(`/tasks/delete/${id}`,{
+      method : 'delete'
+    }).then((response) => window.location.href='/tasks')
+    .catch( (erro) => console.log(erro))
+  }
+})
 </script>
 <script>
 

@@ -70,6 +70,19 @@ class TaskDAO{
             )
         });
     }
+
+    excluir(userId,id){
+        return new Promise((resolve,reject) => {
+            this.db.query("DELETE FROM tarefas WHERE id_usuario = ? AND id = ?",
+            [userId,id],
+            (erro) => {
+                if(erro)
+                    return reject(`Não foi possível excluir a tarefa: ${erro}`);
+                return resolve();
+            }
+          )
+        });
+    }
 }
 
 module.exports = TaskDAO;

@@ -12,5 +12,7 @@ var router = express.Router();
 router.get('/', indexController.index());
 //programar a resposta para a rota /home
 router.get('/home',indexController.home());
+//rota para renderizar a página de aviso de desconexão
+router.get('/desconectado', (req,res) => res.render('desconectado'));
 
 module.exports = router;

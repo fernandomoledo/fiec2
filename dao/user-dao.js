@@ -41,7 +41,40 @@ class UserDAO{
                 }
             )
         });
-    }
+    }//fim do metodo logar
+
+    buscarPorId(id){
+        return new Promise((resolve,reject) => {
+            this.db.query(
+                `SELECT id,nome,email,cpf,tipo,foto,ativo FROM usuarios WHERE id = ?`,
+                [id],
+                (erro,usuario) =>{
+                    if(erro)
+                        return reject(`Erro ao buscar o usuário: ${erro}`)
+                    return resolve(usuario[0])
+                }
+            )
+        })
+    }//fim do método buscarPorId
+
+    alterarSenha(senha,novaSenha,userId){
+        return new Promise((resolve,reject) => {
+            this.db.query(
+            `UPDATE usuarios SET senha = md5(?) WHERE senha = md5(?) and id = ?`,
+                [
+                    novaSenha,
+                    senha,
+                    userId
+                ],
+                (erro,resultado) => {
+                    if(erro)
+                        return reject(`Não foi possível alterar a senha: ${erro}`);
+                    return resolve(resultado);
+                    //resultado => pra insert,delete,update retorna metadados do banco de dados
+                }
+            )
+        })
+    }//fim do método alterarSenha
 }
 
 module.exports = UserDAO;

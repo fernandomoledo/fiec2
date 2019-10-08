@@ -17,5 +17,8 @@ var router = express.Router();
 
 */
 router.post('/login', userController.login());
+router.get('/logout', userController.logout());
+router.get('/myaccount', userController.formEditarMeusDados());
+router.put('/password', userController.alterarSenha());
 
 module.exports = router;

@@ -7,6 +7,7 @@
 const UserDAO = require('../dao/user-dao');
 const userDAO = new UserDAO();
 
+const EnviaEmail = require('../util/envia-email');
 
 class UserController{
     /*
@@ -41,7 +42,74 @@ class UserController{
             }).catch(erro => console.log(erro));
 
         };
-    }
+    }//fim do método login
+
+    logout(){
+        return function(req,res){
+            //mata a sessão do usuário
+            req.session.destroy();
+            //e redireciona para o login
+            res.redirect('/');
+        }
+    }//fim do método logout
+
+    formEditarMeusDados(){
+        return function(req,res){
+            let sessao = req.session;
+            if(sessao.nome){
+                userDAO.buscarPorId(sessao.userId)
+                .then( usuario => {
+                    res.render('users/meusdados',{ sessao : sessao, usuario: usuario})
+                }).catch( erro => {
+                    req.flash('error',erro);
+                    res.redirect('/home');
+                });
+            }else{
+                res.redirect('/');
+            }
+        }
+    }//fim do método formEditarMeusDados
+
+    alterarSenha(){
+        return function(req,res){
+            let sessao = req.session;
+            //capturamos as "3" senhas do form
+            let senha = req.body.senha;
+            let novaSenha = req.body.novasenha;
+            let confSenha = req.body.confsenha;
+            //verificamos se o usuário está logado
+            if(sessao.nome){
+                //testamos se as novas senhas conferem
+                if(novaSenha != confSenha){
+                    req.flash('error','A nova senha não confere com a confirmação.');
+                    res.redirect('/users/myaccount');
+                }else{
+                    userDAO.alterarSenha(senha,novaSenha,sessao.userId)
+                    .then( resultado => {
+                        //verificamos se houve update em algum registro
+                        if(resultado.affectedRows != 0){
+                            //e-mail e nome do usuário que serão usados para enviar o e-mail
+                            let dados_usuario = {
+                                email : sessao.email,
+                                nome : sessao.nome
+                            };
+                            EnviaEmail.enviar(dados_usuario,novaSenha);
+                            sessao.destroy();
+                            res.redirect('/desconectado');
+                        }else{
+                            req.flash('error',`A senha não pode ser alterada`);
+                            res.redirect('/users/myaccount');
+                        }
+                    }).catch( erro =>{
+                        req.flash('error',erro);
+                        res.redirect('/users/myaccount');
+                    })
+                }
+            }else{
+                res.redirect('/');
+            }
+        }
+    }//fim do método alterarSenha
 }
 
 module.exports = UserController;

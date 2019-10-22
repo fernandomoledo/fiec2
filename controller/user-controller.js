@@ -9,6 +9,9 @@ const userDAO = new UserDAO();
 
 const EnviaEmail = require('../util/envia-email');
 
+const fs = require('fs');
+const formidable = require('formidable');
+
 class UserController{
     /*
         O método login recebe os dados do corpo do formulário (email e senha);
@@ -110,6 +113,90 @@ class UserController{
             }
         }
     }//fim do método alterarSenha
+
+    editarFoto() {
+        return function (req, res) {
+            let sessao = req.session;
+            const id_usuario = sessao.userId;
+
+            if (sessao.nome) {
+                let form = new formidable.IncomingForm();
+                const fileSize = 1 * 1024 * 1024; //notação em bytes
+                //transformar o form para ser compatível com formidable
+                form.parse(req, function (erro, fields, files) {
+                    let oldPath = files.foto.path; //foto -> nome campo no html
+                    let nome = `foto_user_id_${id_usuario}`; //nome padrão para a foto
+                    let tipo = files.foto.type; //pega o tipo do arquivo
+
+                    if ((files.foto.size <= fileSize) && (tipo == 'image/jpg' || tipo == 'image/png' || tipo == 'image/jpeg')) {
+                        //caminho relativo, que irá para o banco
+                        let path = `/uploads/${nome}`;
+                        //caminho "completo" para o sistema de arquivos
+                        let fullPath = './public' + path;
+
+                        //move o arquivo da memória para o disco (caminho do projeto)
+                        fs.rename(oldPath, fullPath, (erro) => {
+                        if (erro) {
+                        req.flash('error', `Erro no upload: ${erro}`);
+                        res.redirect('/users/myaccount');
+                        }else{
+                            userDAO.editarFoto(path,id_usuario)
+                            .then(() => {
+                                req.session.foto = path;
+                                req.flash('success','Foto alterada com sucesso!');
+                                res.redirect('/users/myaccount');
+                            }).catch( error => {
+                                req.flash('error', error);
+                                res.redirect('/users/myaccount');
+                            });
+                        }
+                        });
+                    }else{
+                        req.flash('error',`O arquivo deve ser .jpg/.png e tamanho máximo de 1MB.`);
+                        res.redirect('/users/myaccount');
+                    }
+
+                });
+            } else {
+                res.redirect('/');
+            }
+        }
+    } //fim do método editarFoto
+
+    excluirFoto(){
+        return function(req,res){
+            let sessao = req.session;
+            if(sessao.nome){
+                //sessao.foto já tem o /
+                fs.unlink(`./public${sessao.foto}`, (erro) => {
+                    if(erro){
+                        req.flash('error','Erro ao excluir foto!' + erro);
+                        res.redirect('/users/myaccount');
+                    }else{
+                        userDAO.editarFoto(null,sessao.userId)
+                        .then(() => {
+                            req.session.foto = null;
+                            req.flash('success','Foto excluída!');
+                            res.redirect('/users/myaccount');
+                        }).catch(erro =>{
+                            req.flash('error','Erro ao excluir foto!' + erro);
+                        res.redirect('/users/myaccount');
+                        })
+                    }
+                })
+            }
+        }
+    }//fim do método excluirFoto
+
+    listar(){
+        return function(req,res){
+            let sessao = req.session;
+            if(sessao.nome && sessao.tipo == 'A')
+                res.status(200).send('Listagem usuários');
+            else
+                res.redirect('/home');
+        }
+    }//fim do método listar usuários
 }
 
 module.exports = UserController;

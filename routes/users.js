@@ -20,5 +20,8 @@ router.post('/login', userController.login());
 router.get('/logout', userController.logout());
 router.get('/myaccount', userController.formEditarMeusDados());
 router.put('/password', userController.alterarSenha());
+router.post('/avatar',userController.editarFoto());
+router.delete('/avatar',userController.excluirFoto());
+router.get('/',userController.listar());
 
 module.exports = router;

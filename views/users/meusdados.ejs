@@ -33,22 +33,33 @@
 </form> 
 </div>
 <div class="tab-pane fade" id="nav-avatar" role="tabpanel" aria-labelledby="nav-avatar-tab">
-<form method="post" action="/users/avatar" enctype="multipart/form-data">
+	<form method="post" action="/users/avatar" enctype="multipart/form-data">
 
- <div class="form-row">
-		 <div class="form-group col-md-5">
-		<label for="foto">Alterar avatar</label>
-		<input type="file" class="form-control" id="foto" name="foto" aria-describedby="avatarHelp" required> 
-		<small id="avatarHelp" class="form-text text-muted">Envie uma imagem .jpg ou .png de até 1MB.</small>
-		</div>    
-		
-		<div class="form-group col-md-7">
-		<label for="fotoatual">Meu avatar atual</label>
-		<img src="/uploads/anonimo.jpg" style=" width: 80%; min-height: 500px; max-height: 500px;" class="form-control" id="fotoatual" />
-		</div>                                                        
+<div class="form-row">
+	<div class="form-group col-md-5">
+			<label for="foto">Alterar avatar</label>
+			<input type="file" class="form-control" id="foto" name="foto"
+					aria-describedby="avatarHelp" required>
+			<small id="avatarHelp" class="form-text text-muted">Envie uma imagem .jpg ou .png de até
+					1MB.</small>
+	</div>
+
+	<div class="form-group col-md-7">
+			<label for="fotoatual">Meu avatar atual</label>
+			<img src="<%= usuario.foto != null ? usuario.foto : '/uploads/anonimo.jpg' %>"
+					style=" width: 80%; min-height: 500px; max-height: 500px;" class="form-control"
+					id="fotoatual" />
+	</div>
+	<button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+
+	<% if(usuario.foto != null){ %>
+	<form method="post" action="/users/avatar">
+			<input type="hidden" id="_method" name="_method" value="delete" />
+			<button type="submit" class="btn btn-danger">Excluir avatar</button>
+	</form>
+	<% } %>
 </div>
-<button type="submit" class="btn btn-primary" onclick="return confirm('Confirma alteração da foto de perfil (avatar)?');">Salvar</button>
-</form> 
 
 </div>
 <div class="tab-pane fade" id="nav-sec" role="tabpanel" aria-labelledby="nav-sec-tab">

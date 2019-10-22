@@ -75,6 +75,20 @@ class UserDAO{
             )
         })
     }//fim do método alterarSenha
+
+    editarFoto(caminho,id_usuario){
+        return new Promise((resolve,reject) => {
+            this.db.query(
+                `UPDATE usuarios SET foto = ? WHERE id = ?`,
+                [caminho,id_usuario],
+                (erro) => {
+                    if(erro)
+                        return reject('Erro ao salvar a foto no BD: ' + erro)
+                    return resolve();
+                }
+            )
+        });
+    }//fim do método editar foto
 }
 
 module.exports = UserDAO;

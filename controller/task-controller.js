@@ -133,6 +133,23 @@ class TaskController{
             }
         }
     }//fim do método excluir
+
+    relatorioTop10(){
+        return function(req,res){
+            let sessao = req.session;
+            if(sessao.nome && sessao.tipo == 'A'){
+                taskDAO.relatorioTop10()
+                .then( resultado => {
+                    res.render(
+                        'tarefas/report',
+                        {sessao : sessao, resultado : resultado}
+                    );
+                }).catch(erro => console.log(erro))
+            }else{
+                res.redirect('/');
+            }
+        }
+    }//fim do método relatorioTop10
 }
 
 module.exports = TaskController;

@@ -1,0 +1,48 @@
+<% include ../template/cabecalho %>
+      
+                <div class="col-lg-12 text-center">
+                    <h1 class="mt-5">Relatórios</h1>
+                </div>
+                <div class="col-lg-12">
+                    <% include ../template/mensagens %>
+
+                </div>
+
+                <div class="col-lg-12" style="margin-top: 20px;">
+                    <div id="chartContainer" style="height: 500px; width: 100%;"></div>
+                </div>
+<% include ../template/meio %>
+<!-- https://canvasjs.com/jquery-charts/responsive-chart/ -->
+<script src="/javascripts/jquery.canvasjs.min.js"></script>
+<script>
+$(document).ready(function(){
+    var options = {
+	animationEnabled: true,
+	title: {
+		text: "Top 10 usuários com mais tarefas"
+	},
+	axisY: {
+		title: "Qtde. de tarefas",
+		//suffix: "%",
+        //includeZero: false
+        interval: 1
+	},
+	axisX: {
+        title: "Usuários",
+        labelWrap : true,
+        labelAngle : 360
+	},
+	data: [{
+		type: "column",
+		//yValueFormatString: "#,##0.0#"%"",
+		dataPoints: [
+            <% for(linha of resultado){ %>
+			{ label: "<%= linha.nome %>", y: <%= linha.total %> },	
+			<% } %>
+		]
+	}]
+};
+$("#chartContainer").CanvasJSChart(options);
+});
+</script>
+<% include ../template/rodape %>

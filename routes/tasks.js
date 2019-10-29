@@ -5,7 +5,6 @@ const taskController = new TaskController();
 var express = require('express');
 var router = express.Router();
 
-
 router.get('/', taskController.listar());
 router.get('/add',taskController.formAdicionar());
 router.post('/add',taskController.adicionar());
@@ -14,6 +13,7 @@ router.put('/edit/:id',taskController.editar());
 router.delete('/delete/:id',
     taskController.excluir()
 );
+router.get('/report',taskController.relatorioTop10());
 /*
 router.route('/edit/:id)
     .get(taskController.formEditar())

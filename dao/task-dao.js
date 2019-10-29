@@ -82,7 +82,27 @@ class TaskDAO{
             }
           )
         });
-    }
+    }//fim do método excluir
+
+    relatorioTop10(){
+        return new Promise((resolve,reject) => {
+            this.db.query(
+                `select count(tarefas.id) total,usuarios.nome
+                from tarefas right join usuarios on 
+                tarefas.id_usuario = usuarios.id
+                group by usuarios.nome
+                order by 2,1 desc
+                limit 10
+                `,
+                [],
+                (erro,resultado) => {
+                    if(erro)
+                        return reject('Erro ao gerar o relatório: ' + erro);
+                    return resolve(resultado);
+                }
+            )
+        });
+    }//fim do método relatorioTop10
 }
 
 module.exports = TaskDAO;
